@@ -1,7 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import "./sidebar.css"
+import { Context } from '../../context/Context';
 export const Sidebar = () => {
   const [extended,setExtended]=useState(false);
+  const {onSent,prevPrompts,setRecentPrompt}= useContext(Context)
   return (
     <aside className='sidebar'>
       <div className="top">
@@ -15,10 +17,15 @@ export const Sidebar = () => {
         {extended?
         <div className="recent">
           <p className="recent-title">Recent</p>
-          <div className="recent-entry">
-            <img src="https://icons.veryicon.com/png/o/miscellaneous/2px-common-icons/message-63.png" alt="" />
-            <p>What is React ....</p>
-          </div>
+          {prevPrompts.map((item)=>{
+            return (
+              <div className="recent-entry">
+                <img src="https://icons.veryicon.com/png/o/miscellaneous/2px-common-icons/message-63.png" alt="" />
+                <p>{item.slice(0,18)} ....</p>
+              </div>
+            )
+          })}
+         
         </div>
         :
         null}
